@@ -4,12 +4,14 @@ This is a simple Python script that will customize cover letters for you. Given 
 
 ## Installation and Setup
 
-Before running this code, you will need to install some dependencies: [argparse](https://pypi.org/project/argparse/), [DateTime](https://pypi.org/project/DateTime/), [FPDF](https://pypi.org/project/fpdf/), [PyPDF2](https://pypi.org/project/PyPDF2/), and update os if necessary. See the links for installation instructions (in general, you can use ``` pip install <package>```). You will need to include a list of the companies you will be applying to in a .txt file with each company followed by a newline (see companies.txt for an example). In addition, you will need to have template of your cover letter saved as a .txt file with the following modifications:
+Before running this code, you will need to install some dependencies: [argparse](https://pypi.org/project/argparse/), [DateTime](https://pypi.org/project/DateTime/), [FPDF](https://pypi.org/project/fpdf/), [PyPDF2](https://pypi.org/project/PyPDF2/), and update os if necessary. See the links for installation instructions (in general, you can use ``` pip install <package>```). 
+You will need to have template of your cover letter saved as a .txt file with the following modifications:
  - Put [Date] wherever you want the date to go
  - Put [Company] wherever you want to insert the company name
  - Put [Full Name] wherever you want to fill in your name
  - Put [Position] wherever you want to insert the position you are applying for
  See sample_cover_letter_template.txt for an example (found at [this website](https://pyfpdf.readthedocs.io/en/latest/reference/FPDF/index.html)).
+In addition, you can optionally include a list of the companies you will be applying to in a .txt file with each company followed by a newline (see sample_companies.txt for an example) as well as a PDF version of your resume (only if you want to merge the cover letter and resume together). 
 
  ## Running Code
 
