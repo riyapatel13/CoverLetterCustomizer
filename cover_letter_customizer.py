@@ -110,29 +110,42 @@ if __name__ == "__main__":
     cover_letter_dir = setup_dir(cover_letter_dir)
     merge = input("Would you like to merge your cover letter with your resume (Y/N)?\n")
 
-    if merge == 'Y': merge = True
+    if merge == 'Y': 
+        merge = True
     else: merge = False
 
+    separate = True
     if merge:
         resume_path = input("Type in the relative path of your resume:\n")
+        separate = input("Would you also like to have a separate version of your cover letter (Y/N)?\n")
+        if separate == 'Y':
+            separate = True
+        else: separate = False
 
     if args.companies_file is None:
         cover_letter_path = customize_pdf(tem, cur_date, company, name, position, cover_letter_dir)
-        print(cover_letter_path)
-        print(resume_path)
         if merge:
             merge_pdf(cover_letter_path, resume_path, cover_letter_dir)
+            if not separate:
+                os.remove(cover_letter_path)
     else:
         companies = list_companies(args.companies_file)
         for company in companies:
             cover_letter_path = customize_pdf(tem, cur_date, company, name, position, cover_letter_dir)
             if merge:
                 merge_pdf(cover_letter_path, resume_path, cover_letter_dir)
+                if not separate:
+                    os.remove(cover_letter_path)
     
     
-    if cover_letter_dir == None:
-        print(f"Your customized cover letter(s) are saved in the current folder")
-    else: 
-        print(f"Your customized cover letter(s) are saved in the folder {cover_letter_dir}")
+    if separate:
+        if cover_letter_dir == None:
+            print(f"Your customized cover letter(s) are saved in the current folder")
+        else: 
+            print(f"Your customized cover letter(s) are saved in the folder {cover_letter_dir}")
+
     if merge:
-        print("Your merged letter is stored in the same folder.")
+        if cover_letter_dir == None:
+            print(f"Your merged cover letter(s) and resume are saved in the current folder")
+        else: 
+            print(f"Your merged cover letter(s) and resume are saved in the folder {cover_letter_dir}")
