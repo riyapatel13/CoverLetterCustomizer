@@ -1,6 +1,6 @@
 # CoverLetterCustomizer
 
-This is a simple Python script that will customize cover letters for you. Given a cover letter template (in a txt format) and a list of companies to apply to (line-separated txt file), this script will create individual cover letters for each company and return a folder with all the letters in a PDF format.
+This is a simple Python script that will customize cover letters for you. Given a cover letter template (in a txt format) and (optionally) a list of companies to apply to (line-separated txt file), this script will create individual cover letters for each company and return a folder with all the letters in a PDF format.
 
 ## Installation and Setup
 
@@ -15,10 +15,10 @@ Before running this code, you will need to install some dependencies: [argparse]
 
  Run the following:
  ```bash
-    python3 cover_letter_customizer.py <companies_file> <template_path>
+    python3 cover_letter_customizer.py <template_path> <companies_file> 
  ```
- - <companies_file>: .txt file containing line-separated list of companies
  - <template_path>: path to .txt file containing cover letter template
+ - OPTIONAL <companies_file>: .txt file containing line-separated list of companies
 
- On the command line, it will then ask you to type out your full name, position you're applying for, and the name of the folder to store the cover letters. After that, there will be a message indicating that the cover letters have been written.
+ On the command line, it will then ask you to type out your full name, position you're applying for, company name (if not companies file is not provided), and the name of the folder to store the cover letters. After that, there will be a message indicating that the cover letters have been written.
 
