@@ -25,7 +25,7 @@ To run for a single company:
  - Company name
  - Name of the folder to store the cover letter
  - Whether or not you want to merge cover letter with resume
-  - Path to resume (must be a PDF)
+   - Path to resume (must be a PDF)
  
  After all that, there will be a message indicating that the cover letters have been written.
 
@@ -41,6 +41,6 @@ To run for a list of companies:
  - Position you're applying for
  - Name of the folder to store the cover letter
  - Whether or not you want to merge cover letter with resume
-  - Path to resume (must be a PDF)
+   - Path to resume (must be a PDF)
  
  After all that, there will be a message indicating that the cover letters have been written.
