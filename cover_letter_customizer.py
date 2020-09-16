@@ -1,11 +1,8 @@
 import argparse
-from PyPDF2 import PdfFileReader
-from reportlab.pdfgen.canvas import Canvas
-from reportlab.lib.units import inch, cm
-from pathlib import Path
 from datetime import date
 from fpdf import FPDF
 import os
+# from PyPDF2 import PdfFileReader # only necessary if your template is in PDF format, although there are some encoding issues ...
 
 def list_companies(input_file):
     companies = []
