@@ -1,8 +1,11 @@
 import argparse
+from PyPDF2 import PdfFileReader
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.units import inch, cm
+from pathlib import Path
 from datetime import date
 from fpdf import FPDF
 import os
-# from PyPDF2 import PdfFileReader # only necessary if your template is in PDF format, although there are some encoding issues ...
 
 def list_companies(input_file):
     companies = []
@@ -40,6 +43,16 @@ def date_str():
     date_str = f"{months[cur_date.month]} {cur_date.day}, {cur_date.year}"
     return date_str
 
+# if newline, return None. else create directory if it doesn't exist
+def setup_dir(dir_name):
+    print(dir_name)
+    if dir_name == '': 
+        dir_name = None
+    else:
+        if not os.path.exists(dir_name):
+            os.mkdir(dir_name)
+    return dir_name
+
 def customize_pdf(template, date, company, name, position, cover_letter_dir):
     # customize string
     template = template.replace("[Date]", date)
@@ -51,31 +64,44 @@ def customize_pdf(template, date, company, name, position, cover_letter_dir):
     pdf.add_page()
     pdf.set_font('Times', '', 12)
     pdf.multi_cell(0, 0.25, template)
-    pdf.output(f'{cover_letter_dir}/{company}_cover_letter.pdf', 'F').encode("latin-1")
+    if cover_letter_dir != None:
+        pdf.output(f'{cover_letter_dir}/{company}_cover_letter.pdf', 'F').encode("latin-1")
+    else: pdf.output(f'{company}_cover_letter.pdf', 'F').encode("latin-1")
 
     return
    
 if __name__ == "__main__":
     
     argparser = argparse.ArgumentParser(description = "Cover Letter Customizer - Given a list of companies you want to apply to (line-separated txt file) and a cover letter template (txt), this file will create a folder with customized cover letters for each company.")
-    argparser.add_argument("companies_file",
-                        type=str,
-                        help="txt file containing company names (line-separated)")
     argparser.add_argument("template_path",
                         type=str,
                         help="path to txt of the template")
+    argparser.add_argument("--companies_file",
+                        type=str,
+                        default=None,
+                        help="optional txt file containing company names (line-separated)")
 
+    # collecting info
     args = argparser.parse_args()
-    companies = list_companies(args.companies_file)
     cur_date = date_str()
-    
     tem = txt_to_string(args.template_path)
     name = input("Please enter your FULL NAME:\n")
     position = input("Please enter the position you are applying for:\n")
-    cover_letter_dir = input("Please enter a folder name to save all the cover letters:\n")
-    os.mkdir(cover_letter_dir)
+    # additional input for single letter
+    if args.companies_file is None:
+        company = input("Please enter company you are applying to:\n")
 
-    for company in companies:
+    cover_letter_dir = input("Please enter a folder name to save all the cover letters (Optional - hit Enter for no folder):\n")
+    cover_letter_dir = setup_dir(cover_letter_dir)
+
+    if args.companies_file is None:
         customize_pdf(tem, cur_date, company, name, position, cover_letter_dir)
-
-    print(f"Your customized cover letters are saved in the folder {cover_letter_dir}")
+    else:
+        companies = list_companies(args.companies_file)
+        for company in companies:
+            customize_pdf(tem, cur_date, company, name, position, cover_letter_dir)
+    
+    if cover_letter_dir == None:
+        print(f"Your customized cover letter(s) are saved in the current folder")
+    else: 
+        print(f"Your customized cover letter(s) are saved in the folder {cover_letter_dir}")
